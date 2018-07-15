@@ -21,6 +21,6 @@ from django.urls import path
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('<int:post_id>', views.single),
+    path('detail/<int:post_id>', views.single,name='single'),
 
 ]
