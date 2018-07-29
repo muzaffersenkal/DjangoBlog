@@ -209,9 +209,11 @@
                             </section>
                             <!-- End comment-sec Area -->
 
+
                             <!-- Start commentform Area -->
                             <section class="commentform-area  pb-120 pt-80 mb-100">
                                 <div class="container">
+                                      {% if user.is_authenticated %}
                                     <h5 class="text-uppercas pb-50">Leave a Reply</h5>
                                     <div class="row flex-row d-flex">
                                         <div class="col-lg-6">
@@ -225,8 +227,17 @@
                                             <a class="primary-btn mt-20" href="#">Comment</a>
                                         </div>
                                     </div>
+                                        {% else %}
+                                              <h3>Yorum bırakmak için lütfen giriş yapın</h3>
+                                                <div class="button-group-area mt-10">
+                                                <a class="genric-btn primary-border" href="#" > Giriş Yap</a>
+                                                <a class="genric-btn primary-border" href="#" > Kayıt Ol</a>
+                                                    </div>
+
+                                         {% endif %}
                                 </div>
                             </section>
+
                             <!-- End commentform Area -->
 
                         </div>

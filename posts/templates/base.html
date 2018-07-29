@@ -48,19 +48,25 @@
 								<li><a href="#fashion">fashion</a></li>
 								<li><a href="#team">team</a></li>
 								<!-- Dropdown -->
+								{% if user.is_authenticated %}
+
+
 							    <li class="dropdown">
 							      <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-							        Pages
+							        {{ user.username }}
 							      </a>
 							      <div class="dropdown-menu">
-							        <a class="dropdown-item" href="single.html">Single</a>
-							        <a class="dropdown-item" href="category.html">Category</a>
-							        <a class="dropdown-item" href="search.html">Search</a>
-							        <a class="dropdown-item" href="archive.html">Archive</a>
-							        <a class="dropdown-item" href="generic.html">Generic</a>
-							        <a class="dropdown-item" href="elements.html">Elements</a>
+							        <a class="dropdown-item" href="single.html">Profilim</a>
+							        <a class="dropdown-item" href="category.html">Yazı Ekle</a>
+							        <a class="dropdown-item" href="search.html">Ayarlar</a>
+
 							      </div>
 							    </li>
+								{% else %}
+								<li><a href="/login">Giriş Yap</a></li>
+								<li><a href="/register">Kayıt Ol</a></li>
+
+								{% endif %}
 						    </ul>
 						  </div>
 					</div>
