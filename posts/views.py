@@ -10,6 +10,6 @@ def index(request):
     allPosts  = Post.objects.all()
     return render(request,'posts/index.html',{'posts': allPosts})
 
-def single(request,post_id):
-    post = get_object_or_404(Post,pk=post_id)
+def single(request,slug):
+    post = get_object_or_404(Post,slug=slug)
     return render(request,'posts/single.html',{'single' : post })

@@ -49,7 +49,7 @@
 						<div class="item single-cat">
 							<img src="{{ post.image.url }}" alt="">
 							<p class="date">{{ post.created }}</p>
-							<h4><a href="{% url 'single' post.id %}">{{ post.title }}</a> <small>{{ post.user.username}}</small></h4>
+							<h4><a href="{% url 'single' post.slug %}">{{ post.title }}</a> <small>{{ post.user.username}}</small></h4>
 						</div>
 						{% endfor %}
 
