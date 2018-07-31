@@ -13,3 +13,4 @@ def index(request):
 def single(request,slug):
     post = get_object_or_404(Post,slug=slug)
     return render(request,'posts/single.html',{'single' : post })
+

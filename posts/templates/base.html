@@ -33,7 +33,7 @@
 			<header class="default-header">
 				<nav class="navbar navbar-expand-lg navbar-light">
 					<div class="container">
-						  <a class="navbar-brand" href="index.html">
+						  <a class="navbar-brand" href="/">
 						  	<img src="{% static "img/logo.png" %}" alt="">
 						  </a>
 						  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,11 +59,12 @@
 							        <a class="dropdown-item" href="single.html">Profilim</a>
 							        <a class="dropdown-item" href="category.html">Yazı Ekle</a>
 							        <a class="dropdown-item" href="search.html">Ayarlar</a>
+							        <a class="dropdown-item" href="{% url 'logout' %}">Çıkış Yap</a>
 
 							      </div>
 							    </li>
 								{% else %}
-								<li><a href="/login">Giriş Yap</a></li>
+								<li><a href="{% url 'login' %}">Giriş Yap</a></li>
 								<li><a href="/register">Kayıt Ol</a></li>
 
 								{% endif %}
