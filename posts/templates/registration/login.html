@@ -5,51 +5,63 @@
             <!-- Start top-section Area -->
             <section class="top-section-area section-gap">
                 <div class="container">
-                    <div class="row justify-content-between align-items-center d-flex">
-                        <div class="col-lg-8 top-left">
-                            <h1 class="text-white mb-20">Giriş Yap</h1>
+                    <div class="row justify-content-center">
+                              <div class="col-lg-6" style="border:2px solid #eee; padding:20px;background:#fff">
 
-                        </div>
+                        {% if user.is_authenticated %}
+                        <h3>Çoktan giriş yaptınız</h3>
+                        {% else %}
+
+                        {% if form.errors %}
+
+                            {% for key,value in form.errors.items %}
+
+                            <div class="alert alert-danger">
+                                {{ value }}
+                            </div>
+
+
+                            {% endfor %}
+
+
+                        {% endif %}
+
+                        <h3 style="text-align:center">Giriş Yapın</h3>
+                        <p style="text-align:center;margin-top:20px; margin-bottom:20px">Yazılarınızı bizimle paylaşmak için bize katılın.</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            	<div class="mt-20">
+
+										<input type="text" name="username"  {% if form.username.errors %} style="border:1px solid red;" {% endif %} placeholder="Kullanıcı Adı" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Kullanıcı Adı'" required class="single-input">
+
+
+                                </div>
+
+                            	<div class="mt-20">
+										<input type="password"  {% if form.password.errors %} style="border:1px solid red;" {% endif %} placeholder="Şifre" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Şifre'"  name="password"  required class="single-input">
+
+                                </div>
+                           <div class="mt-20" style="text-align:center">
+
+                            <button type="submit" class="nw-btn primary-btn">Giriş Yap</button>
+                               </div>
+
+                        </form>
+
+                        <hr style="margin-top:30px; margin-bottom:30px">
+
+                        <a href="#"  style="float:right" class="genric-btn success-border circle arrow">Kayıt Ol<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="#"  style="float:left" class="genric-btn success-border circle arrow">Şifremi Unuttum</span></a>
+                        {% endif %}
+                    </div>
+
                     </div>
                 </div>
             </section>
             <!-- End top-section Area -->
 
 
-    <!-- Start post Area -->
-    <div class="post-wrapper pt-100">
-        <!-- Start post Area -->
-        <section class="post-area">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
 
-                        {% if user.is_authenticated %}
-                        <h3>Çoktan giriş yaptınız</h3>
-                        {% else %}
-
-                        <h3>Giriş Yapın</h3>
-                        <form method="post">
-                            {% csrf_token %}
-                            	<div class="mt-10">
-										<input type="text" name="username" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" required class="single-input">
-									</div>
-
-                            	<div class="mt-10">
-										<input type="password" name="password"  required class="single-input">
-
-                                </div>
-                           <div class="mt-10">
-
-                            <button type="submit" class="genric-btn primary-border">Giriş Yap</button>
-                               </div>
-
-                        </form>
-                        {% endif %}
-                    </div>
-                <div class="col-lg-4 sidebar-area "></div>
-            </div>
-        </section>
         <!-- End post Area -->
     </div>
     <!-- End post Area -->
