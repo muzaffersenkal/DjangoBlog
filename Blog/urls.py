@@ -19,11 +19,13 @@ from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as authViews
+from posts.views import register
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('posts.urls')),
     path('login/', authViews.LoginView.as_view(),name="login"),
+    path('register/', register ,name="register"),
     path('logout/',authViews.logout,name="logout")
 
 
