@@ -1,0 +1,45 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+            <!-- Start top-section Area -->
+            <section class="top-section-area section-gap">
+                <div class="container">
+                    <div class="row justify-content-between align-items-center d-flex">
+                        <div class="col-lg-8 top-left">
+                            <h1 class="text-white mb-20">Yazı Ekle</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End top-section Area -->
+
+
+    <!-- Start post Area -->
+    <div class="post-wrapper pt-100">
+        <!-- Start post Area -->
+        <section class="post-area">
+            <div class="container">
+                <div class="row justify-content-center">
+
+                    <div class="col-lg-6">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            {{ form.as_p }}
+
+
+
+                             <button type="submit" class="nw-btn primary-btn">Giriş Yap</button>
+                        </form>
+
+                    </div>
+                 </div>
+            </div>
+        </section>
+        <!-- End post Area -->
+    </div>
+    <!-- End post Area -->
+
+{% endblock %}

@@ -9,7 +9,8 @@ class Post(models.Model):
     image = models.ImageField(upload_to='uploads/',blank=True)
     content = models.TextField()
     slug = models.SlugField(unique=True)
-    created = models.DateField('date published')
+    created = models.DateField(auto_now_add=True)
+    updated = models.DateField(auto_now=True)
 
     def __str__(self):
         return  self.title + " => " + str(self.created)
