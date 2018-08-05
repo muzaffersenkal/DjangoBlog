@@ -4,6 +4,8 @@ from .models import Post
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreatePostForm
 from django.contrib.auth.decorators import login_required
+from django.views import View
+from django.utils.decorators import method_decorator
 
 
 # Create your views here.
@@ -50,3 +52,43 @@ def createPost(request):
             return redirect('/')
         else:
             return render(request,'posts/create_post.html',{'form':form})
+
+
+@method_decorator(login_required(login_url='/login'),name="dispatch")
+class CreatePostView(View):
+
+    form_class = CreatePostForm
+    template_name = 'posts/create_post.html'
+
+    def get(self,request,*args,**kwargs):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form})
+
+    def post(self,request,*args,**kwargs):
+
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            return redirect('/')
+        else:
+            return render(request, self.template_name, {'form': form})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

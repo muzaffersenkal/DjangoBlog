@@ -19,7 +19,7 @@ from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as authViews
-from posts.views import register,createPost
+from posts.views import register,createPost,CreatePostView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,7 +28,7 @@ urlpatterns = [
     path('password/change/', authViews.PasswordChangeView.as_view(template_name='registration/password-change.html'),name="password_change"),
     path('password/change/done', authViews.PasswordChangeDoneView.as_view(template_name='registration/password-change-done.html'),name="password_change_done"),
     path('register/', register ,name="register"),
-    path('create/', createPost ,name="createPost"),
+    path('create/', CreatePostView.as_view() ,name="createPost"),
     path('logout/',authViews.logout,name="logout")
 
 
