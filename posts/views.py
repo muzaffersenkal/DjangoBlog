@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Post
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreatePostForm
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -33,7 +34,7 @@ def register(request):
         form = UserCreationForm()
         return render(request,'registration/register.html',{'form':form})
 
-
+@login_required(login_url='/login')
 def createPost(request):
 
     if request.method == 'GET':
@@ -43,7 +44,9 @@ def createPost(request):
     else:
         form = CreatePostForm(request.POST,request.FILES)
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
             return redirect('/')
         else:
             return render(request,'posts/create_post.html',{'form':form})
