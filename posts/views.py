@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CreatePostForm
 from django.contrib.auth.decorators import login_required
 from django.views import View
+from django.views.generic import TemplateView,RedirectView
 from django.utils.decorators import method_decorator
 
 
@@ -14,6 +15,24 @@ from django.utils.decorators import method_decorator
 def index(request):
     allPosts  = Post.objects.all()
     return render(request,'posts/index.html',{'posts': allPosts})
+
+class IndexView(TemplateView):
+    template_name = 'posts/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView,self).get_context_data(**kwargs)
+        context['posts']  = Post.objects.all()
+        context['title'] = 'Son Yazılar'
+        return context
+
+class HomeRedirectView(RedirectView):
+
+    pattern_name = 'index'
+
+    def get_redirect_url(self, *args, **kwargs):
+        return super(HomeRedirectView,self).get_redirect_url(*args,**kwargs)
+
+
 
 def single(request,slug):
     post = get_object_or_404(Post,slug=slug)
