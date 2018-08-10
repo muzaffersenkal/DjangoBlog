@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CreatePostForm
 from django.contrib.auth.decorators import login_required
 from django.views import View
-from django.views.generic import TemplateView,RedirectView
+from django.views.generic import TemplateView,RedirectView,ListView
 from django.utils.decorators import method_decorator
 
 
@@ -31,6 +31,20 @@ class HomeRedirectView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         return super(HomeRedirectView,self).get_redirect_url(*args,**kwargs)
+
+
+class BlogView(ListView):
+    template_name = "posts/blog.html"
+    model = Post
+    context_object_name = "blogPost"
+    paginate_by = 3
+    #queryset = Post.objects.filter(title__icontains='django')
+
+    #def get_queryset(self):
+        #burada işlemleri yapabilirsiniz.
+      #  return Post.objects.all()[:3]
+
+
 
 
 
