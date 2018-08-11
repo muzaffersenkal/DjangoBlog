@@ -16,12 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from . import views
 from django.urls import path
-from .views import CreatePostView,IndexView,BlogView
+from .views import CreatePostView,IndexView,BlogView,PostDetail
 
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    path('detail/<slug:slug>', views.single,name='single'),
+    path('detail/<slug:slug>', views.PostDetail.as_view(),name='single'),
     path('create/', CreatePostView.as_view(), name="createPost"),
     path('blog/', BlogView.as_view(), name="blog"),
 
