@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CreatePostForm
 from django.contrib.auth.decorators import login_required
 from django.views import View
-from django.views.generic import TemplateView,RedirectView,ListView,DetailView
+from django.views.generic import TemplateView,RedirectView,ListView,DetailView,CreateView
 from django.utils.decorators import method_decorator
 
 
@@ -56,6 +56,19 @@ class PostDetail(DetailView):
 
 
 @method_decorator(login_required(login_url='/login'),name="dispatch")
+class CreatePostView(CreateView):
+    template_name = 'posts/create_post.html'
+    form_class = CreatePostForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return  super(CreatePostView,self).form_valid(form)
+
+
+
+'''
+@method_decorator(login_required(login_url='/login'),name="dispatch")
 class CreatePostView(View):
 
     form_class = CreatePostForm
@@ -76,6 +89,7 @@ class CreatePostView(View):
         else:
             return render(request, self.template_name, {'form': form})
 
+'''
 
 # Methodlar
 
