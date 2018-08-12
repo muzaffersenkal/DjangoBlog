@@ -1,0 +1,45 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+            <!-- Start top-section Area -->
+            <section class="top-section-area section-gap">
+                <div class="container">
+                    <div class="row justify-content-between align-items-center d-flex">
+                        <div class="col-lg-8 top-left">
+                            <h1 class="text-white mb-20">Yazı Güncelle</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End top-section Area -->
+
+
+    <!-- Start post Area -->
+    <div class="post-wrapper pt-100 pb-100">
+        <!-- Start post Area -->
+        <section class="post-area">
+            <div class="container">
+                <div class="row justify-content-center">
+
+                    <div class="col-lg-6" style="border:1px solid #eee; padding:20px">
+                            <h3 class="mb-10">Yazıyı Güncelleyin</h3>
+
+
+                            {% crispy form %}
+
+
+
+
+
+                    </div>
+                 </div>
+            </div>
+        </section>
+        <!-- End post Area -->
+    </div>
+    <!-- End post Area -->
+
+{% endblock %}

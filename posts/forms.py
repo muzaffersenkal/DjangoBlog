@@ -25,3 +25,25 @@ class CreatePostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title','content','image')
+
+class UpdatePostForm(forms.ModelForm):
+
+    def __init__(self,*args,**kwargs):
+        super(UpdatePostForm,self).__init__(*args,**kwargs)
+        self.helper = FormHelper()
+        self.helper.field_class = "mt-10"
+        self.helper.layout = Layout(
+            Field("title",css_class="single-input",placeholder="Title"),
+            HTML("<hr>"),
+            Field("content",css_class="single-input",placeholder="Birşeyler Yazın"),
+            Field("image",css_class="single-input"),
+        )
+
+
+        self.helper.add_input(Submit('submit','Yazı Güncelle',css_class="nw-btn primary-btn mt-10"))
+
+
+
+    class Meta:
+        model = Post
+        fields = ('title','content','image')

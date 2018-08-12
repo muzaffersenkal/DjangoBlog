@@ -58,6 +58,8 @@
 
                                 {% if single.user == request.user %}
                                     <a href="{% url 'single' single.slug %}/delete" class="genric-btn default">Sil</a>
+                                    <a href="{% url 'single' single.slug %}/update" class="genric-btn default">Düzenle</a>
+
 
                                 {% endif %}
                             </div>
