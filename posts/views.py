@@ -1,11 +1,11 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from .models import Post
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreatePostForm
 from django.contrib.auth.decorators import login_required
 from django.views import View
-from django.views.generic import TemplateView,RedirectView,ListView,DetailView,CreateView
+from django.views.generic import TemplateView,RedirectView,ListView,DetailView,CreateView,DeleteView
 from django.utils.decorators import method_decorator
 
 
@@ -64,6 +64,28 @@ class CreatePostView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return  super(CreatePostView,self).form_valid(form)
+
+
+@method_decorator(login_required(login_url='/login'),name="dispatch")
+class PostDeleteView(DeleteView):
+    model= Post
+    success_url = '/'
+    template_name = 'posts/delete.html'
+
+    def delete(self,request,*args,**kwargs):
+        self.object = self.get_object()
+        if self.object.user == request.user:
+            self.object.delete()
+            return HttpResponseRedirect(self.success_url)
+        else:
+            return HttpResponseRedirect('/')
+
+    def get(self,request,*args,**kwargs):
+        self.object = self.get_object()
+        if self.object.user != request.user:
+            return HttpResponseRedirect('/')
+        return super(PostDeleteView,self).get(request,*args,*kwargs)
+
 
 
 
