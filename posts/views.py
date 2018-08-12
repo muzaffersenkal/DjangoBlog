@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CreatePostForm,UpdatePostForm
 from django.contrib.auth.decorators import login_required
 from django.views import View
-from django.views.generic import TemplateView,RedirectView,ListView,DetailView,CreateView,DeleteView,UpdateView
+from django.views.generic import TemplateView,RedirectView,ListView,DetailView,CreateView,DeleteView,UpdateView,FormView
 from django.utils.decorators import method_decorator
 
 
@@ -131,6 +131,16 @@ class CreatePostView(View):
             return render(request, self.template_name, {'form': form})
 
 '''
+
+
+class RegisterView(FormView):
+    template_name = 'registration/register.html'
+    form_class = UserCreationForm
+
+    def form_valid(self, form):
+        form.save()
+        return redirect('login')
+
 
 # Methodlar
 
