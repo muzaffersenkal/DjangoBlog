@@ -30,8 +30,14 @@
                               <div class="card-title">
                                   {{ post.title }}  </div>
                               <div class="card-text">{{ post.content }}</div>
-                              <div class="card-text"><small>Bu yazı {{ post.created }} tarihinde eklendi</small></div>
-                              <a href="{% url 'single' post.slug %}" class="float-right btn btn-primary">Detay</a>
+                              <div class="card-text"><small>Bu yazı {{ post.created }} tarihinde eklendi</small>
+
+                              </div>
+                              <div class="card-text mt-15">
+                              <a href="#" class="genric-btn primary-border medium mt-10">{{ post.category.title }}</a>
+                              <a href="{% url 'single' post.slug %}" class="float-right genric-btn info circle arrow">Detay <span class="lnr lnr-arrow-right"></span></a>
+
+                              </div>
 
                           </div>
 
@@ -90,29 +96,15 @@
 
 
                         <div class="single_widget cat_widget">
-                            <h4 class="text-uppercase pb-20">post categories</h4>
+                            <h4 class="text-uppercase pb-20">Tüm Kategoriler</h4>
                             <ul>
+                                {% for category in allCategories %}
                                 <li>
-                                    <a href="#">Technology <span>37</span></a>
+                                    <a href="#">{{ category.title }} <span>{{ category.postCount }}</span></a>
                                 </li>
-                                <li>
-                                    <a href="#">Lifestyle <span>37</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Fashion <span>37</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Art <span>37</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Food <span>37</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Architecture <span>37</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Adventure <span>37</span></a>
-                                </li>
+
+                                {% endfor %}
+
                             </ul>
                         </div>
 

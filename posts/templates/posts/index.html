@@ -48,8 +48,9 @@
 						{% for post in posts %}
 						<div class="item single-cat">
 							<img src="{{ post.image.url }}" alt="">
-							<p class="date">{{ post.created }}</p>
-							<h4><a href="{% url 'single' post.slug %}">{{ post.title }}</a> <small>{{ post.user.username}}</small></h4>
+							<p class="date" style="position:absolute;top:15px; right:15px; font-weight:300">{{ post.category.title }}</p>
+							<p class="date" style="position:absolute;top:35px; right:15px;">{{ post.created }}</p>
+							<h4 class="mt-15"><a href="{% url 'single' post.slug %}">{{ post.title }}</a> <small>{{ post.user.username}}</small></h4>
 						</div>
 						{% endfor %}
 
@@ -150,66 +151,32 @@
 					<div class="row d-flex justify-content-center">
 						<div class="menu-content pb-70 col-lg-8">
 							<div class="title text-center">
-								<h1 class="mb-10">Fashion News This Week</h1>
+								<h1 class="mb-10">Bu Haftaki Moda Yazıları</h1>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore magna aliqua.</p>
 							</div>
 						</div>
 					</div>
 					<div class="row">
+						{% for post in fashion.posts.all %}
 						<div class="col-lg-3 col-md-6 single-fashion">
-							<img class="img-fluid" src="{% static "img/f1.jpg" %} " alt="">
-							<p class="date">10 Jan 2018</p>
-							<h4><a href="#">Addiction When Gambling
-							Becomes A Problem</a></h4>
+							<img class="img-fluid" src="{{ post.image.url }} " alt="">
+							<p class="date">{{ post.created }}</p>
+							<h4><a href="#">{{ post.title }}</a></h4>
 							<p>
-								inappropriate behavior ipsum dolor sit amet, consectetur.
+								{{ post.content|truncatechars:100 }}
 							</p>
 							<div class="meta-bottom d-flex justify-content-between">
 								<p><span class="lnr lnr-heart"></span> 15 Likes</p>
 								<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
 							</div>
 						</div>
-						<div class="col-lg-3 col-md-6 single-fashion">
-							<img class="img-fluid" src="{% static "img/f2.jpg" %}"  alt="">
-							<p class="date">10 Jan 2018</p>
-							<h4><a href="#">Addiction When Gambling
-							Becomes A Problem</a></h4>
-							<p>
-								inappropriate behavior ipsum dolor sit amet, consectetur.
-							</p>
-							<div class="meta-bottom d-flex justify-content-between">
-								<p><span class="lnr lnr-heart"></span> 15 Likes</p>
-								<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6 single-fashion">
-							<img class="img-fluid" src="{% static "img/f3.jpg" %}" alt="">
-							<p class="date">10 Jan 2018</p>
-							<h4><a href="#">Addiction When Gambling
-							Becomes A Problem</a></h4>
-							<p>
-								inappropriate behavior ipsum dolor sit amet, consectetur.
-							</p>
-							<div class="meta-bottom d-flex justify-content-between">
-								<p><span class="lnr lnr-heart"></span> 15 Likes</p>
-								<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
-							</div>
-						</div>
-						<div class="col-lg-3 col-md-6 single-fashion">
-							<img class="img-fluid" src="{% static "img/f4.jpg" %}" alt="">
-							<p class="date">10 Jan 2018</p>
-							<h4><a href="#">Addiction When Gambling
-							Becomes A Problem</a></h4>
-							<p>
-								inappropriate behavior ipsum dolor sit amet, consectetur.
-							</p>
-							<div class="meta-bottom d-flex justify-content-between">
-								<p><span class="lnr lnr-heart"></span> 15 Likes</p>
-								<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
-							</div>
-						</div>
-						<a href="#" class="primary-btn load-more pbtn-2 text-uppercase mx-auto mt-60">Load More </a>
+						{% endfor %}
+
+
+
+
 					</div>
+						<p style="text-align:center"><a href="#" class="primary-btn load-more pbtn-2 text-uppercase mx-auto mt-60">Load More </a></p>
 				</div>
 			</section>
 			<!-- End fashion Area -->

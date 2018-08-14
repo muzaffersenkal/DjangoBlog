@@ -7,11 +7,11 @@
                 <div class="container">
                     <div class="row justify-content-between align-items-center d-flex">
                         <div class="col-lg-8 top-left">
-                            <h1 class="text-white mb-20">Post Details</h1>
+                            <h1 class="text-white mb-20">{{ single.title }}</h1>
                             <ul>
-                                <li><a href="index.html">Home</a><span class="lnr lnr-arrow-right"></span></li>
-                                <li><a href="category.html">Category</a><span class="lnr lnr-arrow-right"></span></li>
-                                <li><a href="single.html">Fashion</a></li>
+                                <li><a href="{% url 'index' %}">Anasayfa</a><span class="lnr lnr-arrow-right"></span></li>
+                                <li><a href="category.html">{{ single.category.title }}</a><span class="lnr lnr-arrow-right"></span></li>
+                                <li><span style="color:#f1f1f1">{{ single.title }}</span></li>
                             </ul>
                         </div>
                     </div>
@@ -34,6 +34,7 @@
                                     <h2 class="col-lg-8 col-md-12 text-uppercase">
                                         {{ single.title }}
                                     </h2>
+
                                     <div class="col-lg-4 col-md-12 right-side d-flex justify-content-end">
                                         <div class="desc">
                                            <h2>{{ single.user.username }}</h2>
@@ -276,29 +277,14 @@
                             </div>
                         </div>
                         <div class="single_widget cat_widget">
-                            <h4 class="text-uppercase pb-20">post categories</h4>
+                            <h4 class="text-uppercase pb-20">Tüm Kategoriler</h4>
                             <ul>
+
+                                {% for category in allCategories %}
                                 <li>
-                                    <a href="#">Technology <span>37</span></a>
+                                    <a href="#">{{category.title }} <span>{{ category.postCount }} </span></a>
                                 </li>
-                                <li>
-                                    <a href="#">Lifestyle <span>37</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Fashion <span>37</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Art <span>37</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Food <span>37</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Architecture <span>37</span></a>
-                                </li>
-                                <li>
-                                    <a href="#">Adventure <span>37</span></a>
-                                </li>
+                                {% endfor %}
                             </ul>
                         </div>
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse,HttpResponseRedirect
-from .models import Post
+from .models import Post,Category
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreatePostForm,UpdatePostForm
 from django.contrib.auth.decorators import login_required
@@ -22,6 +22,7 @@ class IndexView(TemplateView):
         context = super(IndexView,self).get_context_data(**kwargs)
         context['posts']  = Post.objects.all()
         context['title'] = 'Son Yazılar'
+        context['fashion'] = Category.objects.get(slug='moda')
         return context
 
 class HomeRedirectView(RedirectView):
@@ -39,6 +40,12 @@ class BlogView(ListView):
     paginate_by = 3
     #queryset = Post.objects.filter(title__icontains='django')
 
+    def get_context_data(self, **kwargs):
+        context = super(BlogView, self).get_context_data(**kwargs)
+        context['allCategories'] = Category.objects.all()
+
+        return context
+
     #def get_queryset(self):
         #burada işlemleri yapabilirsiniz.
       #  return Post.objects.all()[:3]
@@ -49,6 +56,12 @@ class PostDetail(DetailView):
     template_name = "posts/single.html"
     model = Post
     context_object_name = "single"
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetail, self).get_context_data(**kwargs)
+        context['allCategories'] = Category.objects.all()
+
+        return context
 
    # def  get_object(self):
    #     slug = self.kwargs.get("slug")

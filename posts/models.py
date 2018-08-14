@@ -12,6 +12,9 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    def postCount(self):
+        return self.posts.all().count()
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Category, self).save(*args, **kwargs)
@@ -25,7 +28,7 @@ class Post(models.Model):
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
 
-    category = models.ForeignKey(Category,on_delete=models.CASCADE)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="posts")
 
     def __str__(self):
         return  self.title + " => " + str(self.created)
