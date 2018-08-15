@@ -282,7 +282,7 @@
 
                                 {% for category in allCategories %}
                                 <li>
-                                    <a href="#">{{category.title }} <span>{{ category.postCount }} </span></a>
+                                    <a href="{% url 'category-detail' category.slug %}">{{category.title }} <span>{{ category.postCount }} </span></a>
                                 </li>
                                 {% endfor %}
                             </ul>

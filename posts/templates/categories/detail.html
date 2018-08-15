@@ -1,110 +1,79 @@
-
 {% extends "base.html" %}
-{% load static %}
-{% block content %}
+
+         {% block content %}
+
             <!-- Start top-section Area -->
             <section class="top-section-area section-gap">
                 <div class="container">
                     <div class="row justify-content-between align-items-center d-flex">
                         <div class="col-lg-8 top-left">
-                            <h1 class="text-white mb-20">Blog Yazıları</h1>
+                            <h1 class="text-white mb-20">{{ category.title }}</h1>
+                            <ul>
+                                <li><a href="{% url 'index' %}">Anasayfa</a><span class="lnr lnr-arrow-right"></span></li>
+                                <li><span style="color:#f1f1f1">Category</span></li>
 
+                            </ul>
                         </div>
                     </div>
-                </div>
+                </div>  
             </section>
             <!-- End top-section Area -->
 
-
+    
     <!-- Start post Area -->
     <div class="post-wrapper pt-100">
         <!-- Start post Area -->
         <section class="post-area">
             <div class="container">
-                <div class="row justify-content-center">
-                  <div class="col-lg-8">
-                      {% for post in blogPost %}
-                      <div class="card mb-4">
-                          <img src="{{ post.image.url }}"  class="card-img-top"/>
-                          <div class="card-body">
-                              <div class="card-title">
-                                  {{ post.title }}  </div>
-                              <div class="card-text">{{ post.content }}</div>
-                              <div class="card-text"><small>Bu yazı {{ post.created }} tarihinde eklendi</small>
+                <div class="row justify-content-center d-flex">
+                    <div class="col-lg-8">
+                        <div class="post-lists">
+                            {% for post in category.posts.all %}
+                            <div class="single-list flex-row d-flex">
+                                <div class="thumb">
+                                    <div class="date">
+                                       {{ post.created }}
+                                    </div>
+                                    <img src="{{ post.image.url }}" alt="">
+                                </div>
+                                <div class="detail">
+                                    <a href="{% url 'single' post.slug %}"><h4 class="pb-20">{{ post.title }}</h4></a>
+                                    <p>
+                                      {{ post.content|truncatechars:100 }}
+                                    </p>
+                                    <p class="footer pt-20">
+                                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                    <a href="#">06 Likes</a>     <i class="ml-20 fa fa-comment-o" aria-hidden="true"></i> <a href="#">02 Comments</a>
+                                    </p>
+                                </div>
+                            </div>
 
-                              </div>
-                              <div class="card-text mt-15">
-                              <a href="{% url 'category-detail' post.category.slug %} " class="genric-btn primary-border medium mt-10">{{ post.category.title }}</a>
-                              <a href="{% url 'single' post.slug %}" class="float-right genric-btn info circle arrow">Detay <span class="lnr lnr-arrow-right"></span></a>
-
-                              </div>
-
-                          </div>
-
-
-
-                      </div>
-
-                      {% endfor %}
-
-
-                      {% if is_paginated %}
-                            <nav class="navigation">
-
-                                <ul class="pagination justify-content-end">
-                                    {% if page_obj.has_previous %}
-                                    <li class="page-item">
-                                        <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}" class="page-link">Önceki</a>
-                                    </li>
-                                    {% endif %}
-
-                                      <li class="page-item active">
-                                        <a href="#" class="page-link">{{ page_obj.number }}</a>
-                                    </li>
-
-                                    {% if page_obj.has_next %}
-                                    <li class="page-item">
-                                        <a href="{{ request.path }}?page={{ page_obj.next_page_number }}" class="page-link">Sonraki</a>
-                                    </li>
-                                    {% endif %}
-
-
-
-                                </ul>
-
-
-                            </nav>
-
-
-                      {% endif %}
-
-                  </div>
-
-                    <div class="col-lg-4 sidebar-area ">
+                            {% endfor %}
+                        </div>
+                   </div>
+                    <div class="col-lg-4 sidebar-area">
                         <div class="single_widget search_widget">
-                            <div id="imaginary_container">
+                            <div id="imaginary_container"> 
                                 <div class="input-group stylish-input-group">
                                     <input type="text" class="form-control"  placeholder="Search" >
                                     <span class="input-group-addon">
                                         <button type="submit">
                                             <span class="lnr lnr-magnifier"></span>
-                                        </button>
+                                        </button>  
                                     </span>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
 
 
                         <div class="single_widget cat_widget">
                             <h4 class="text-uppercase pb-20">Tüm Kategoriler</h4>
                             <ul>
-                                {% for category in allCategories %}
+                                 {% for category in allCategories %}
                                 <li>
                                     <a href="{% url 'category-detail' category.slug %}">{{ category.title }} <span>{{ category.postCount }}</span></a>
                                 </li>
-
                                 {% endfor %}
-
                             </ul>
                         </div>
 
@@ -112,28 +81,28 @@
                             <h4 class="text-uppercase pb-20">Recent Posts</h4>
                             <div class="active-recent-carusel">
                                 <div class="item">
-                                    <img src="{% static "img/asset/slider.jpg" %} " alt="">
+                                    <img src="img/asset/slider.jpg" alt="">
                                     <p class="mt-20 title text-uppercase">Home Audio Recording <br>
                                     For Everyone</p>
                                     <p>02 Hours ago <span> <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                    06 <i class="fa fa-comment-o" aria-hidden="true"></i>02</span></p>
-                                </div>
+                                    06 <i class="fa fa-comment-o" aria-hidden="true"></i>02</span></p>    
+                                </div>  
                                 <div class="item">
-                                    <img src="{% static "img/asset/slider.jpg" %} " alt="">
+                                    <img src="img/asset/slider.jpg" alt="">
                                     <p class="mt-20 title text-uppercase">Home Audio Recording <br>
                                     For Everyone</p>
                                     <p>02 Hours ago <span> <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                    06 <i class="fa fa-comment-o" aria-hidden="true"></i>02</span></p>
-                                </div>
+                                    06 <i class="fa fa-comment-o" aria-hidden="true"></i>02</span></p>    
+                                </div>  
                                 <div class="item">
-                                    <img src="{% static "img/asset/slider.jpg" %} " alt="">
+                                    <img src="img/asset/slider.jpg" alt="">
                                     <p class="mt-20 title text-uppercase">Home Audio Recording <br>
                                     For Everyone</p>
                                     <p>02 Hours ago <span> <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                    06 <i class="fa fa-comment-o" aria-hidden="true"></i>02</span></p>
-                                </div>
+                                    06 <i class="fa fa-comment-o" aria-hidden="true"></i>02</span></p>    
+                                </div>                                                                                            
                             </div>
-                        </div>
+                        </div>  
 
 
                         <div class="single_widget cat_widget">
@@ -159,9 +128,9 @@
                                 </li>
                                 <li>
                                     <a href="#">Jun'17 <span>37</span></a>
-                                </li>
+                                </li>                                
                             </ul>
-                        </div>
+                        </div> 
                         <div class="single_widget tag_widget">
                             <h4 class="text-uppercase pb-20">Tag Clouds</h4>
                             <ul>
@@ -175,13 +144,13 @@
                                 <li><a href="#">Food</a></li>
                                 <li><a href="#">Technology</a></li>
                             </ul>
-                        </div>
+                        </div>                                                 
                     </div>
                 </div>
-            </div>
+            </div>    
         </section>
-        <!-- End post Area -->
+        <!-- End post Area -->  
     </div>
     <!-- End post Area -->
 
-{% endblock %}
+         {% endblock %}

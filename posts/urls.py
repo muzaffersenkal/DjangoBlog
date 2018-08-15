@@ -27,4 +27,7 @@ urlpatterns = [
     path('create/', CreatePostView.as_view(), name="createPost"),
     path('blog/', BlogView.as_view(), name="blog"),
 
+    #category
+    path('category/<slug:slug>', views.CategoryDetail.as_view(),name='category-detail'),
+
 ]
