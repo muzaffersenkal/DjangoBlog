@@ -13,6 +13,7 @@ class CreatePostForm(forms.ModelForm):
         self.helper.layout = Layout(
             Field("title",css_class="single-input",placeholder="Title"),
             HTML("<hr>"),
+            Field("category", css_class="single-input"),
             Field("content",css_class="single-input",placeholder="Birşeyler Yazın"),
             Field("image",css_class="single-input"),
         )
@@ -24,7 +25,7 @@ class CreatePostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title','content','image')
+        fields = ('title','content','category','image')
 
 class UpdatePostForm(forms.ModelForm):
 
@@ -35,6 +36,7 @@ class UpdatePostForm(forms.ModelForm):
         self.helper.layout = Layout(
             Field("title",css_class="single-input",placeholder="Title"),
             HTML("<hr>"),
+            Field("category", css_class="single-input"),
             Field("content",css_class="single-input",placeholder="Birşeyler Yazın"),
             Field("image",css_class="single-input"),
         )
@@ -46,4 +48,4 @@ class UpdatePostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title','content','image')
+        fields = ('title','content','category','image')
