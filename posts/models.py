@@ -33,7 +33,20 @@ class Post(models.Model):
     def __str__(self):
         return  self.title + " => " + str(self.created)
 
+    def commentCount(self):
+        return self.comments.all().count()
+
     def save(self, *args,**kwargs):
         self.slug =  slugify(self.title)
         super(Post,self).save(*args,**kwargs)
 
+class Comment(models.Model):
+    post = models.ForeignKey(Post,on_delete=models.CASCADE,default=1,related_name="comments")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,default=1)
+
+    content = models.TextField()
+
+    created = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username + " => " + self.post.title
