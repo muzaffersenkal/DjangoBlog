@@ -2,8 +2,9 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Post,Category,Comment
+from .models import Post,Category,Comment,Tag
 
 admin.site.register(Post)
 admin.site.register(Category)
 admin.site.register(Comment)
+admin.site.register(Tag)

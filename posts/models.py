@@ -19,6 +19,19 @@ class Category(models.Model):
         self.slug = slugify(self.title)
         super(Category, self).save(*args, **kwargs)
 
+
+class Tag(models.Model):
+    title = models.CharField(max_length=50)
+    slug = models.SlugField(unique=True, editable=False)
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Tag, self).save(*args, **kwargs)
+
+
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,default=1)
     title = models.CharField(max_length=150)
@@ -28,7 +41,10 @@ class Post(models.Model):
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
 
+
+
     category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="posts")
+    tag = models.ManyToManyField(Tag)
 
     def __str__(self):
         return  self.title + " => " + str(self.created)
@@ -50,3 +66,14 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.user.username + " => " + self.post.title
+
+
+
+
+
+
+
+
+
+
+
