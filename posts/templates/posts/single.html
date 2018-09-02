@@ -1,6 +1,7 @@
 
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
             <!-- Start top-section Area -->
             <section class="top-section-area section-gap">
@@ -152,16 +153,7 @@
                                       {% if user.is_authenticated %}
                                     <h5 class="text-uppercas pb-50">Leave a Reply</h5>
                                     <div class="row flex-row d-flex">
-                                        <div class="col-lg-6">
-                                            <input name="name" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control" required="" type="text">
-                                            <input name="email" placeholder="Enter your email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your email'" class="common-input mb-20 form-control" required="" type="email">
-                                            <input name="Subject" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your Subject'" class="common-input mb-20 form-control" required="" type="text">
-
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <textarea class="form-control mb-10" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
-                                            <a class="primary-btn mt-20" href="#">Comment</a>
-                                        </div>
+                                       {% crispy form %}
                                     </div>
                                         {% else %}
                                               <h3>Yorum bırakmak için lütfen giriş yapın</h3>

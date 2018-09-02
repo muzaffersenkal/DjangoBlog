@@ -1,12 +1,16 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.urls import reverse
+from django.views.generic.edit import FormMixin
+
 from .models import Post,Category
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreatePostForm,UpdatePostForm
+from .forms import CreatePostForm, UpdatePostForm, CreateCommentForm
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.views.generic import TemplateView,RedirectView,ListView,DetailView,CreateView,DeleteView,UpdateView,FormView
 from django.utils.decorators import method_decorator
+
 
 
 
@@ -61,16 +65,38 @@ class BlogView(ListView):
 
 
 
-class PostDetail(DetailView):
+class PostDetail(DetailView,FormMixin):
     template_name = "posts/single.html"
     model = Post
     context_object_name = "single"
+    form_class = CreateCommentForm
+
+    def get_success_url(self):
+        return reverse('single',kwargs={'slug': self.object.slug})
 
     def get_context_data(self, **kwargs):
         context = super(PostDetail, self).get_context_data(**kwargs)
         context['allCategories'] = Category.objects.all()
+        context['form']= self.get_form()
 
         return context
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.post = self.object
+        form.save()
+
+        return super().form_valid(form)
+
+    def post(self,request,*args,**kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
    # def  get_object(self):
    #     slug = self.kwargs.get("slug")
