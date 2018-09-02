@@ -31,6 +31,8 @@ class Tag(models.Model):
         self.slug = slugify(self.title)
         super(Tag, self).save(*args, **kwargs)
 
+    def postCount(self):
+        return self.posts.all().count()
 
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,default=1)
@@ -44,7 +46,7 @@ class Post(models.Model):
 
 
     category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="posts")
-    tag = models.ManyToManyField(Tag)
+    tag = models.ManyToManyField(Tag,related_name='posts')
 
     def __str__(self):
         return  self.title + " => " + str(self.created)

@@ -3,15 +3,13 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidde
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
 
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, Tag
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreatePostForm, UpdatePostForm, CreateCommentForm
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.views.generic import TemplateView,RedirectView,ListView,DetailView,CreateView,DeleteView,UpdateView,FormView
 from django.utils.decorators import method_decorator
-
-
 
 
 
@@ -63,6 +61,16 @@ class BlogView(ListView):
         #burada işlemleri yapabilirsiniz.
       #  return Post.objects.all()[:3]
 
+class TagDetail(DetailView):
+
+    model = Tag
+    template_name = 'tags/detail.html'
+    context_object_name = 'tag'
+
+    def get_context_data(self, **kwargs):
+        context = super(TagDetail,self).get_context_data(**kwargs)
+        context['allCategories'] = Category.objects.all()
+        return context
 
 
 class PostDetail(DetailView,FormMixin):

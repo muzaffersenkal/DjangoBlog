@@ -49,10 +49,10 @@
                             </div>
                             <div class="tags">
                                 <ul>
-                                    <li><a href="#">lifestyle</a></li>
-                                    <li><a href="#">Art</a></li>
-                                    <li><a href="#">Technology</a></li>
-                                    <li><a href="#">Fashion</a></li>
+                                    {% for tag in single.tag.all %}
+                                    <li><a href="{% url 'tag-detail' tag.slug %}">{{ tag.title }}</a></li>
+
+                                    {% endfor %}
                                 </ul>
                             </div>
                             <div class="single-post-content">
