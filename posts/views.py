@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidde
 from django.urls import reverse
 from django.views.generic.edit import FormMixin
 
-from .models import Post,Category
+from .models import Post, Category, Comment
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreatePostForm, UpdatePostForm, CreateCommentForm
 from django.contrib.auth.decorators import login_required
@@ -101,6 +101,28 @@ class PostDetail(DetailView,FormMixin):
    # def  get_object(self):
    #     slug = self.kwargs.get("slug")
    #     return Post.objects.get(slug = slug)
+
+
+@method_decorator(login_required(login_url='/login'),name="dispatch")
+class CommentDeleteView(DeleteView):
+    model = Comment
+
+    def get_success_url(self):
+        return reverse('single', kwargs={'slug': self.object.post.slug})
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.user == request.user:
+            self.object.delete()
+
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return HttpResponseRedirect(self.get_success_url())
+
+
+    def get(self,request,*args,**kwargs):
+        return self.post(request,*args,**kwargs)
+
 
 
 @method_decorator(login_required(login_url='/login'),name="dispatch")

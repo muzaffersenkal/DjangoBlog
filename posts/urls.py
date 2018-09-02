@@ -30,4 +30,6 @@ urlpatterns = [
     #category
     path('category/<slug:slug>', views.CategoryDetail.as_view(),name='category-detail'),
 
+    path('comment/<int:pk>/delete',views.CommentDeleteView.as_view(),name="comment-delete")
+
 ]
