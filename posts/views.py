@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.views.generic import TemplateView,RedirectView,ListView,DetailView,CreateView,DeleteView,UpdateView,FormView
 from django.utils.decorators import method_decorator
+from django.template.defaultfilters import slugify
 
 
 
@@ -141,6 +142,18 @@ class CreatePostView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.save()
+        allTags = self.request.POST.get("tag").split(",")
+
+        for tag in allTags:
+            currentTag = Tag.objects.filter(slug=slugify(tag))
+            if currentTag.count() < 1 :
+                createdTag = Tag.objects.create(title=tag)
+                form.instance.tag.add(createdTag)
+            else:
+                foundTag = Tag.objects.get(slug=slugify(tag))
+                form.instance.tag.add(foundTag)
+
         return  super(CreatePostView,self).form_valid(form)
 
 @method_decorator(login_required(login_url='/login'),name="dispatch")

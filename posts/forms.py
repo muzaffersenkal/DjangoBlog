@@ -14,6 +14,7 @@ class CreatePostForm(forms.ModelForm):
             Field("title",css_class="single-input",placeholder="Title"),
             HTML("<hr>"),
             Field("category", css_class="single-input"),
+            Field("tag", css_class="single-input",data_role="tagsinput"),
             Field("content",css_class="single-input",placeholder="Birşeyler Yazın"),
             Field("image",css_class="single-input"),
         )
@@ -22,7 +23,7 @@ class CreatePostForm(forms.ModelForm):
         self.helper.add_input(Submit('submit','Yazı Ekle',css_class="nw-btn primary-btn mt-10"))
 
 
-
+    tag = forms.CharField()
     class Meta:
         model = Post
         fields = ('title','content','category','image')

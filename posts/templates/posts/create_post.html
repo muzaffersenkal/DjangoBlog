@@ -27,7 +27,7 @@
                     <div class="col-lg-6" style="border:1px solid #eee; padding:20px">
                             <h3 class="mb-10">Yeni Yazı Ekleyin</h3>
 
-
+     
                             {% crispy form %}
 
 
@@ -41,5 +41,22 @@
         <!-- End post Area -->
     </div>
     <!-- End post Area -->
+
+{% endblock %}
+
+{% block css %}
+
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.css'>
+
+<style>
+.tag {background: #62bdfc ; padding:5px 3px; }
+
+</style>
+
+{% endblock %}
+
+{% block js %}
+
+<script src='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js'></script>
 
 {% endblock %}
