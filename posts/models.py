@@ -58,6 +58,10 @@ class Post(models.Model):
         self.slug =  slugify(self.title)
         super(Post,self).save(*args,**kwargs)
 
+    def currentPostTags(self):
+
+        return ','.join(str(v) for v in self.tag.all())
+
 class Comment(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE,default=1,related_name="comments")
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,default=1)

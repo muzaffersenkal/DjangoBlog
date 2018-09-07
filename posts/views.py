@@ -166,6 +166,18 @@ class UpdatePostView(UpdateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        allTags = self.request.POST.get("tag").split(",")
+        form.instance.tag.clear()
+        for tag in allTags:
+            currentTag = Tag.objects.filter(slug=slugify(tag))
+            if currentTag.count() < 1:
+                createdTag = Tag.objects.create(title=tag)
+                form.instance.tag.add(createdTag)
+            else:
+                foundTag = Tag.objects.get(slug=slugify(tag))
+                form.instance.tag.add(foundTag)
+
+
         return  super(UpdatePostView,self).form_valid(form)
 
     def get(self,request,*args,**kwargs):
