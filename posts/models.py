@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 # Create your models here.
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -61,6 +62,10 @@ class Post(models.Model):
     def currentPostTags(self):
 
         return ','.join(str(v) for v in self.tag.all())
+
+    def get_absolute_url(self):
+
+        return reverse("single",kwargs={"slug":self.slug})
 
 class Comment(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE,default=1,related_name="comments")

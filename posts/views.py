@@ -138,7 +138,10 @@ class CommentDeleteView(DeleteView):
 class CreatePostView(CreateView):
     template_name = 'posts/create_post.html'
     form_class = CreatePostForm
-    success_url = '/'
+
+
+    def get_success_url(self):
+        return reverse("single", kwargs={"slug": self.object.slug})
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -159,10 +162,13 @@ class CreatePostView(CreateView):
 @method_decorator(login_required(login_url='/login'),name="dispatch")
 class UpdatePostView(UpdateView):
     model = Post
-    success_url = '/'
+
     template_name = 'posts/update_post.html'
 
     form_class = UpdatePostForm
+
+    def get_success_url(self):
+        return reverse("single",kwargs={"slug":self.object.slug})
 
     def form_valid(self, form):
         form.instance.user = self.request.user

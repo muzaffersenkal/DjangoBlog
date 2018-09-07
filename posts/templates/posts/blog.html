@@ -35,7 +35,7 @@
                               </div>
                               <div class="card-text mt-15">
                               <a href="{% url 'category-detail' post.category.slug %} " class="genric-btn primary-border medium mt-10">{{ post.category.title }}</a>
-                              <a href="{% url 'single' post.slug %}" class="float-right genric-btn info circle arrow">Detay <span class="lnr lnr-arrow-right"></span></a>
+                              <a href="{{ post.get_absolute_url }}" class="float-right genric-btn info circle arrow">Detay <span class="lnr lnr-arrow-right"></span></a>
 
                               </div>
 
