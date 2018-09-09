@@ -35,6 +35,21 @@ class HomeRedirectView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         return super(HomeRedirectView,self).get_redirect_url(*args,**kwargs)
 
+
+class SearchView(ListView):
+    model = Post
+    template_name = "posts/search.html"
+    paginate_by = 5
+    context_object_name = "posts"
+
+    def get_queryset(self):
+
+        q = self.request.GET.get("q")
+        if q:
+            return Post.objects.filter(title__icontains=q)
+        return Post.objects.all()
+
+
 class CategoryDetail(DetailView):
     model = Category
     template_name = "categories/detail.html"
