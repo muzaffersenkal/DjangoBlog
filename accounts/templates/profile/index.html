@@ -1,0 +1,131 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+            <!-- Start top-section Area -->
+            <section class="top-section-area section-gap">
+                <div class="container">
+                    <div class="row justify-content-center align-items-center d-flex">
+                        <div class="col-lg-6" style="text-align:center">
+                            <img src="{{ profile.avatar.url }}"  width="128" height="128" style="border-radius:64px"/>
+                            <h3 class="text-white">{{ profile.user.username }}</h3>
+                            <h6 style="color:#ddd">Toplam Yazı: {{ profile.user.userposts.count }}</h6>
+                            <span>Admin</span>
+                            <p>Takipçi : 10 | Takip Edilen : 20</p>
+
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End top-section Area -->
+
+
+
+    <!-- Start post Area -->
+    <div class="post-wrapper pt-100">
+        <!-- Start post Area -->
+        <section class="post-area">
+            <div class="container">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8">
+                      {% for post in profile.user.userposts.all %}
+                      <div class="card mb-4">
+                          <img src="{{ post.image.url }}"  class="card-img-top"/>
+                          <div class="card-body">
+                              <div class="card-title">
+                                  {{ post.title }}  </div>
+                              <div class="card-text">{{ post.content }}</div>
+                              <div class="card-text"><small>Bu yazı {{ post.created }} tarihinde eklendi</small>
+
+                              </div>
+                              <div class="card-text mt-15">
+                              <a href="{% url 'category-detail' post.category.slug %} " class="genric-btn primary-border medium mt-10">{{ post.category.title }}</a>
+                              <a href="{{ post.get_absolute_url }}" class="float-right genric-btn info circle arrow">Detay <span class="lnr lnr-arrow-right"></span></a>
+
+                              </div>
+
+                          </div>
+
+
+
+                      </div>
+
+                      {% endfor %}
+
+
+                      {% if is_paginated %}
+                            <nav class="navigation">
+
+                                <ul class="pagination justify-content-end">
+                                    {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}" class="page-link">Önceki</a>
+                                    </li>
+                                    {% endif %}
+
+                                      <li class="page-item active">
+                                        <a href="#" class="page-link">{{ page_obj.number }}</a>
+                                    </li>
+
+                                    {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a href="{{ request.path }}?page={{ page_obj.next_page_number }}" class="page-link">Sonraki</a>
+                                    </li>
+                                    {% endif %}
+
+
+
+                                </ul>
+
+
+                            </nav>
+
+
+                      {% endif %}
+
+                  </div>
+
+                    <div class="col-lg-4 sidebar-area ">
+
+
+                        <div class="single_widget cat_widget">
+                            <h4 class="text-uppercase pb-20">Profilim</h4>
+                            <ul>
+                                <li>
+                                    <a href="#">Profili Düzenle</a>
+
+
+                                </li>
+
+                                 <li>
+                                    <a href="#">Ayarlar</a>
+
+
+                                </li>
+
+                                 <li>
+                                    <a href="#">Şifreyi Değiştir</a>
+
+
+                                </li>
+
+                                 <li>
+                                    <a href="#">Çıkış Yap</a>
+
+
+                                </li>
+
+
+                            </ul>
+                        </div>
+                 </div>
+                </div>
+            </div>
+        </section>
+        <!-- End post Area -->
+    </div>
+    <!-- End post Area -->
+
+
+{% endblock %}

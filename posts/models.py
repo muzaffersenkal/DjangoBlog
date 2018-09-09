@@ -36,7 +36,7 @@ class Tag(models.Model):
         return self.posts.all().count()
 
 class Post(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,default=1)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,default=1,related_name="userposts")
     title = models.CharField(max_length=150)
     image = models.ImageField(upload_to='uploads/',blank=True)
     content = models.TextField()

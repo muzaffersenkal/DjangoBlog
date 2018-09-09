@@ -25,6 +25,7 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('posts.urls')),
+    path('profile/', include('accounts.urls')),
     path('login/', authViews.LoginView.as_view(),name="login"),
     path('password/change/', authViews.PasswordChangeView.as_view(template_name='registration/password-change.html'),name="password_change"),
     path('password/change/done', authViews.PasswordChangeDoneView.as_view(template_name='registration/password-change-done.html'),name="password_change_done"),
