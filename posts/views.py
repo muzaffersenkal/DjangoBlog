@@ -46,7 +46,12 @@ class SearchView(ListView):
 
         q = self.request.GET.get("q")
         if q:
-            return Post.objects.filter(title__icontains=q)
+            qs = Post.objects.filter(title__icontains=q)
+            if qs.count() < 1:
+                tags = Tag.objects.get(title__icontains=q)
+
+                return tags.posts.all()
+            return qs
         return Post.objects.all()
 
 
