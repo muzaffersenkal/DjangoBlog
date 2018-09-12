@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from . import views
 from django.urls import path
-from .views import MyProfileView
+from .views import MyProfileView,ProfileView
 
 
 urlpatterns = [
     path('', MyProfileView.as_view(), name='my-profile'),
+    path('<slug:slug>',ProfileView.as_view(),name="view-profile")
 
 
 ]

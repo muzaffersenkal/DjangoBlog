@@ -12,7 +12,7 @@ class UserProfile(models.Model):
     avatar = models.ImageField(upload_to="uploads/avatars/",default="uploads/avatars/default.jpg")
 
 
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True,editable=False)
 
     def save(self,*args,**kwargs):
         self.slug = slugify(self.user.username)
