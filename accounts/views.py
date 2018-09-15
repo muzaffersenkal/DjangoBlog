@@ -22,3 +22,18 @@ class ProfileView(DetailView):
     model = UserProfile
     template_name = "profile/view.html"
     context_object_name = "profile"
+
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView,self).get_context_data(**kwargs)
+
+        myprofile = self.request.user.profile.get()
+
+        if myprofile.follow.filter(slug=self.get_object().slug):
+            context["followStatus"] = "unfollow"
+
+        else:
+            context["followStatus"] = "follow"
+
+
+        return context
