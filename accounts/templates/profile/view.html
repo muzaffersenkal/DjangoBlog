@@ -14,10 +14,10 @@
                              <p>Takipçi : {{ profile.followersCount }}  | Takip Edilen : {{ profile.followedCount }} </p>
 
                             {%  if followStatus == "follow" %}
-                            <p><a class="btn genric-btn primary circle" href="#">Takip Et</a></p>
+                            <p><a class="btn genric-btn primary circle followOrUnfollow" data-status="{{ followStatus }}" href="#">Takip Et</a></p>
 
                             {% else %}
-                               <p><a class="btn genric-btn danger circle" href="#">Takibi Bırak</a></p>
+                               <p><a class="btn genric-btn danger circle followOrUnfollow" data-status="{{ followStatus }}" href="#">Takibi Bırak</a></p>
                             {% endif %}
 
 
@@ -100,5 +100,55 @@
     </div>
     <!-- End post Area -->
 
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        $(".followOrUnfollow").click(function(){
+
+            var status = $(this).attr("data-status");
+
+            var _this = $(this);
+
+           $.ajax({
+
+             url : "{% url 'follow-profile' profile.slug %}",
+             type : "POST",
+             data: { "user": "{{ profile.slug }}" , "csrfmiddlewaretoken": "{{ csrf_token }}","status": status },
+
+             success: function(data){
+
+                if(status == "follow"){
+
+                _this.addClass("danger");
+                _this.attr("data-status","unfollow");
+                _this.removeClass("primary");
+                _this.text("Takibi Bırak");
+
+
+                }else{
+
+                _this.addClass("primary");
+                _this.attr("data-status","follow");
+                _this.removeClass("danger");
+                _this.text("Takip Et");
+
+                }
+                console.log(data)
+             },
+
+             error: function(err){
+
+                console.log(err.responseText);
+             }
+
+
+           });
+
+        });
+
+    </script>
 
 {% endblock %}

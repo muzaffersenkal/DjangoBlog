@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView,DetailView
 from .models import UserProfile
@@ -37,3 +38,45 @@ class ProfileView(DetailView):
 
 
         return context
+
+
+
+def FollowProfile(request,slug):
+
+
+        if request.method == 'POST':
+
+                status = request.POST.get("status")
+                userSlug = request.POST.get("user")
+                user = get_object_or_404(UserProfile,slug=userSlug)
+                myprofile = request.user.profile.get()
+                if status == 'follow':
+
+                    myprofile.follow.add(user)
+                    lastStatus = "Takip Edildi"
+
+
+                else:
+                    myprofile.follow.remove(user)
+                    lastStatus = "Takip Bırakıldı"
+
+                data = {
+                    "status": lastStatus
+                }
+
+                return JsonResponse(data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
