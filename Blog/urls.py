@@ -22,12 +22,12 @@ from django.contrib.auth import views as authViews
 from posts.views import register,HomeRedirectView,RegisterView
 from django.views.generic import RedirectView
 from rest_framework import routers
-from posts.api.views import UserViewSet
+from posts.api.views import UserViewSet,PostViewSet
 
 
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-
+router.register('users', UserViewSet)
+router.register('posts', PostViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
