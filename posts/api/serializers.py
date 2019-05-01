@@ -10,7 +10,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Comment
-        fields= ('user','content','created',)
+        fields= ('user','id','content','created',)
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
 

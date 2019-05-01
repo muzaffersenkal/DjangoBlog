@@ -112,6 +112,8 @@
                             </section>
                             <!-- End nav Area -->
 
+
+
                             <!-- Start comment-sec Area -->
                             <section class="comment-sec-area pt-80 pb-80">
                                 <div class="container">
@@ -120,7 +122,7 @@
                                         <br>
                                        <div class="comment-list">
 
-                                           {% for comment in single.comments.all %}
+                                           {% for comment in single.comments.all|slice:":2" %}
                                             <div class="single-comment justify-content-between d-flex">
                                                 <div class="user justify-content-between d-flex">
                                                     <div class="thumb">
@@ -140,9 +142,12 @@
                                                 </div>
                                                 {% endif %}
                                             </div>
-
                                            {% endfor %}
-                                        </div>
+
+                                           		<button href="#" class="primary-btn load-more pbtn-2 text-uppercase mx-auto mt-60">Daha Fazla Yorum </button>
+
+
+                                       </div>
                                     </div>
                                 </div>
                             </section>
@@ -289,3 +294,69 @@
     <!-- End post Area -->
 
 {% endblock %}
+
+{% block js %}
+
+<script type="text/javascript">
+
+    $(document).ajaxStart(function(){
+
+        $(".load-more").html("Yükleniyor...");
+    })
+
+
+
+    $(".load-more").click( function(){
+        //click event start
+        console.log("butona tıklandı")
+
+        $.ajax({
+            method: "GET",
+            url: "http://localhost:8000/api/posts/{{ single.id}}/",
+            }).done(function(data){
+            console.log(data)
+                $(".comment-list").empty()
+                var comments = data.comments
+                $.each(comments , function(i,e){
+                        let username = e.user.username
+                        let content = e.content
+                        let created = e.created
+                        let commentID = e.id
+                        let currentUser = '{{ request.user}}'
+
+
+
+
+                        let isOwn = username == currentUser ? '<div class="reply-btn">'+
+                                                      ' <a href="http://localhost:8000/comment/'+commentID+'/delete" class="btn-reply text-uppercase">Sil</a>'+
+                                                '</div>' : '';
+
+
+
+                        $(".comment-list").append('<div class="single-comment justify-content-between d-flex">'+
+                                                '<div class="user justify-content-between d-flex">'+
+                                                   ' <div class="thumb">'+
+                                                       ' <img src="{% static "img/asset/c4.jpg" %} " alt="">'+
+                                                    '</div>'+
+                                                    '<div class="desc">'+
+                                                        '<h5><a href="#">'+username+'</a></h5>'+
+                                                        '<p class="date">'+created+'</p>'+
+                                                        '<p class="comment">'+content+
+                                                        '</p>'+
+                                                    '</div>'+
+                                                '</div>'+isOwn+
+
+                                            '</div>')
+
+                });
+
+
+            });
+
+    });
+
+</script>
+
+
+{% endblock %}
+
